@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PublicKey, Transaction } from '@solana/web3.js';
 
 type DisplayEncoding = 'utf8' | 'hex';
@@ -41,12 +41,13 @@ export const getProvider = (): PhantomProvider | undefined => {
   return undefined;
 };
 
-export const checkIfWalletIsConnected = () => {
+export const checkIfWalletIsConnected = async () => {
   try {
     const provider = getProvider();
     if (provider) {
       console.log('Wallet found! Phantom');
-      return provider;
+      const { publicKey } = await provider.connect({ onlyIfTrusted: true });
+      return { provider, walletAddress: publicKey.toString() };
     } else {
       alert('Solana object not found! Get a Phantom Wallet 👻');
       return null;
@@ -59,13 +60,29 @@ export const checkIfWalletIsConnected = () => {
 
 export const usePhantomWallet = () => {
   const [wallet, setWallet] = useState<PhantomProvider | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
   useEffect(() => {
     const onLoad = async () => {
-      const provider = checkIfWalletIsConnected();
-      setWallet(provider);
+      const walletInfo = await checkIfWalletIsConnected();
+      if (!walletInfo) {
+        return;
+      }
+      setWallet(walletInfo.provider);
+      setWalletAddress(walletInfo.walletAddress);
     };
     window.addEventListener('load', onLoad);
     return () => window.removeEventListener('load', onLoad);
   }, []);
-  return wallet
+  const connect = useCallback(async () => {
+    console.log('Connecting...');
+    if (!wallet) {
+      return;
+    }
+    const { publicKey } = await wallet.connect();
+    setWalletAddress(publicKey.toString());
+  }, [wallet]);
+  useEffect(() => {
+    console.log('Wallet address', walletAddress);
+  }, [walletAddress]);
+  return { wallet, walletAddress, connect };
 };
