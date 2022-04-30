@@ -10,7 +10,7 @@
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": ["@client"],
+            "allow": ["@client", "@backend"],
             "depConstraints": [
               {
                 "sourceTag": "*",

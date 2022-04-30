@@ -7,6 +7,8 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
@@ -15,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@client/*": ["apps/client/*"]
+      "@client/*": ["apps/client/*"],
+      "@backend/*": ["apps/backend/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
