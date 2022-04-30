@@ -73,6 +73,14 @@
   margin-left: 10px;
 }
 
+.footer-container-content {
+  background: -webkit-linear-gradient(left, rgb(237,200,188), rgb(173, 200, 210));
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+}
 .footer-container {
   display: flex;
   justify-content: center;

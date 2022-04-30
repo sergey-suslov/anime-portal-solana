@@ -168,7 +168,7 @@ export const usePhantomWallet = () => {
     const onLoad = async () => {
       const walletInfo = await checkIfWalletIsConnected();
       if (!walletInfo) {
-        console.log('No wallet found connected');
+        alert('No phantom wallet found, enter password')
         return;
       }
       setWallet(walletInfo.provider);
