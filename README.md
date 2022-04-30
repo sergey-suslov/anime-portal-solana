@@ -1,2 +1,2 @@
 # Anime Portal in Solana
-![Progress](./progress.png?raw=true "Employee Data title")
+![Progress](./progress-1.png?raw=true "progress image")
