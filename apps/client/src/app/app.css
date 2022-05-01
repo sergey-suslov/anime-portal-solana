@@ -118,6 +118,7 @@
   position: relative;
   justify-self: center;
   align-self: center;
+  height: 300px;
 }
 
 .gif-item img {
@@ -125,6 +126,15 @@
   height: 300px;
   border-radius: 10px;
   object-fit: cover;
+}
+.gif-item p {
+  display: 'block';
+  position: absolute;
+  background: #FFFFFFE0;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0 2px 8px #0000080;
+  padding: 8px;
+  bottom: 8px;
 }
 
 .connected-container input[type='text'] {
