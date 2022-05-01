@@ -1,9 +1,9 @@
-import { getGifList, sendGiff } from '@client/src/service/wallet';
+import { getGifList, sendGiff, likeGiff } from '@client/src/service/wallet';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useGifs = () => {
   const [gifList, setGifList] = useState<
-    { gifLink: string; userAddress: string }[] | null
+    { gifLink: string; userAddress: string, id: number, likes: number }[] | null
   >([]);
   const fetchGifs = useCallback(async () => {
     const gifs = await getGifList();
@@ -20,5 +20,12 @@ export const useGifs = () => {
     },
     [fetchGifs]
   );
-  return { gifList, addGiff, fetchGifs };
+  const like = useCallback(
+    async (gifId: number) => {
+      await likeGiff(gifId);
+      fetchGifs();
+    },
+    [fetchGifs]
+  );
+  return { gifList, addGiff, fetchGifs, like };
 };

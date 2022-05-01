@@ -15,7 +15,7 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const App = () => {
   const { walletAddress, connect } = usePhantomWallet();
 
-  const { gifList, addGiff, fetchGifs } = useGifs();
+  const { gifList, addGiff, fetchGifs, like } = useGifs();
 
   const [inputValue, setInputValue] = useState('');
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +80,7 @@ const App = () => {
               <div className="gif-item" key={index}>
                 <img src={item.gifLink} />
                 <p className="gif-user">{item.userAddress.toString()}</p>
+                <button className="button" onClick={() => like(item.id)}>{item.likes && item.likes}👍</button>
               </div>
             ))}
         </div>

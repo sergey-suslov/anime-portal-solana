@@ -67,10 +67,12 @@ export const getAnchorProvider = () => {
 export const getGifList = async () => {
   try {
     const provider = getAnchorProvider();
+    console.log('Got provider')
     if (!provider) {
       return null;
     }
     const program = new Program(idl as Idl, programID, provider);
+    console.log('Public key', baseAccount.publicKey)
     const account = await program.account['baseAccount'].fetch(
       baseAccount.publicKey
     );
@@ -158,6 +160,29 @@ export const sendGiff = async (link: string) => {
     await getGifList();
   } catch (error) {
     console.log('Error sending GIF:', error);
+  }
+};
+
+export const likeGiff = async (id: number) => {
+  console.log('Like gif with id:', id);
+  try {
+    const provider = getAnchorProvider();
+    if (!provider) {
+      throw Error('No provider');
+    }
+    const program = new Program(idl as Idl, programID, provider);
+
+    await program.rpc['sendTip'](id, {
+      accounts: {
+        baseAccount: baseAccount.publicKey,
+        user: provider.wallet.publicKey,
+      },
+    });
+    console.log('GIF successfully liked', id);
+
+    await getGifList();
+  } catch (error) {
+    console.log('Error upvoting GIF:', error);
   }
 };
 
